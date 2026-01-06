@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: winwin-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: winwin
+      POSTGRES_USER: winwin
+      POSTGRES_PASSWORD: winwin
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
