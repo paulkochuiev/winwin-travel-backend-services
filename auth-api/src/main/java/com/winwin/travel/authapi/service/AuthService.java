@@ -25,10 +25,10 @@ public class AuthService {
             throw new IllegalArgumentException("Email already exists");
         }
 
-        User user = new User();
-        user.setEmail(email);
-        user.setPasswordHash(passwordEncoder.encode(rawPassword));
+        String passwordHash = passwordEncoder.encode(rawPassword);
+        User user = new User(email, passwordHash);
 
         userRepository.save(user);
     }
 }
+
