@@ -10,6 +10,44 @@ services:
       POSTGRES_PASSWORD: winwin
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - winwin-network
+
+  auth-api:
+    build:
+      context: ./auth-api
+      dockerfile: Dockerfile
+    container_name: winwin-auth-api
+    ports:
+      - "8080:8080"
+    environment:
+      POSTGRES_URL: jdbc:postgresql://postgres:5432/winwin
+      POSTGRES_USER: winwin
+      POSTGRES_PASSWORD: winwin
+      JWT_SECRET: VERY_LONG_SECRET_KEY_AT_LEAST_32_CHARS_LONG
+      DATA_API_URL: http://data-api:8081
+      INTERNAL_TOKEN: secret
+    depends_on:
+      - postgres
+      - data-api
+    networks:
+      - winwin-network
+
+  data-api:
+    build:
+      context: ./data-api
+      dockerfile: Dockerfile
+    container_name: winwin-data-api
+    ports:
+      - "8081:8081"
+    environment:
+      INTERNAL_TOKEN: secret
+    networks:
+      - winwin-network
+
+networks:
+  winwin-network:
+    driver: bridge
 
 volumes:
   postgres_data:

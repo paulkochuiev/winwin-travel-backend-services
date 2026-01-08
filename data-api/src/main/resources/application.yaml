@@ -6,4 +6,4 @@ server:
   port: 8081
 
 internal:
-  token: secret
+  token: ${INTERNAL_TOKEN:secret}

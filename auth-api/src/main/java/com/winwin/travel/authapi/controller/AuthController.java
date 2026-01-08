@@ -1,5 +1,7 @@
 package com.winwin.travel.authapi.controller;
 
+import com.winwin.travel.authapi.dto.LoginRequest;
+import com.winwin.travel.authapi.dto.LoginResponse;
 import com.winwin.travel.authapi.dto.RegisterRequest;
 import com.winwin.travel.authapi.service.AuthService;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,14 @@ public class AuthController {
         authService.register(request.getEmail(), request.getPassword());
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+
+        String token = authService.login(request.getEmail(), request.getPassword());
+
+        return ResponseEntity.ok(new LoginResponse(token));
     }
 }
 

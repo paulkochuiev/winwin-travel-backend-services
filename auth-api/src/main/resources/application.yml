@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/winwin
-    username: winwin
-    password: winwin
+    url: ${POSTGRES_URL:jdbc:postgresql://postgres:5432/winwin}
+    username: ${POSTGRES_USER:winwin}
+    password: ${POSTGRES_PASSWORD:winwin}
 
   jpa:
     hibernate:
@@ -11,8 +11,12 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
 jwt:
-  secret: "VERY_LONG_SECRET_KEY_AT_LEAST_32_CHARS_LONG"
+  secret: ${JWT_SECRET:VERY_LONG_SECRET_KEY_AT_LEAST_32_CHARS_LONG}
   expiration-ms: 3600000
+
+data-api:
+  url: ${DATA_API_URL:http://data-api:8081}
+  internal-token: ${INTERNAL_TOKEN:secret}
 
 server:
   port: 8080
